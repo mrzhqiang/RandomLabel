@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RandomLabel</string>
+    <string name="random_label_demo">Random Label Demo</string>
+    <string name="btn_placeholder">占位按钮</string>
+</resources>
