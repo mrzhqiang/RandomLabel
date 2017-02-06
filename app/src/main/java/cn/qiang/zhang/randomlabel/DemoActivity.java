@@ -1,18 +1,17 @@
 package cn.qiang.zhang.randomlabel;
 
-import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qiang.zhang.library.LabelView;
 
 public class DemoActivity extends AppCompatActivity {
 
@@ -26,6 +25,9 @@ public class DemoActivity extends AppCompatActivity {
     FrameLayout layoutPlaceHolder;
     @BindView(R.id.demo_btn_placeholder)
     Button btnPlaceHolder;
+
+    @BindView(R.id.demo_layout_all)
+    RelativeLayout layoutAll;
 
     LabelManager labelManager;
 
@@ -42,8 +44,14 @@ public class DemoActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.demo_btn_placeholder, R.id.demo_layout_placeholder, R.id.demo_iv_placeholder, R.id.demo_layout_label, R.id.demo_tv_content})
+    @OnClick({R.id.demo_btn_placeholder, R.id.demo_iv_placeholder})
     void addLabel(View view) {
+        if (view.equals(ivPlaceHolder)) {
+            if (labelManager != null) {
+                labelManager.clear();
+                return;
+            }
+        }
         addRandom();
     }
 
@@ -53,13 +61,14 @@ public class DemoActivity extends AppCompatActivity {
 
         if (labelManager == null) {
 
-            labelManager = LabelManager.create(this, layoutLabel, "已认证");
-            labelManager.setPlaceHolder(ivPlaceHolder);
+            labelManager = LabelManager.create(layoutLabel, "已认证");
+            labelManager.setPlaceHolder(layoutAll, ivPlaceHolder);
+            labelManager.addPlaceHolder(layoutPlaceHolder);
             for (int i = 0; i < 10; i++) {
                 labelManager.addLabel("序列" + i);
             }
 
         }
-        labelManager.addLabel("随机" + (int) (1000 + 9999 * Math.random()));
+        labelManager.addLabel("随机" + (int) (10 + 99 * Math.random()));
     }
 }
